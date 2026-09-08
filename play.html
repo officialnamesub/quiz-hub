@@ -421,7 +421,9 @@ async function pollState(){
   } else if(phase==='final'){
     if(lastSig!=='final'){ lastSig='final'; const fin=st.fin||{}; const mine=fin[me.tag]||{top:[],total:0};
       const champ = (mine.top&&mine.top[0]) ? (esc(mine.top[0].name)+', '+mine.top[0].score+' pts') : 'No scores this time';
-      let team=''; if(fin.teamWin && fin.youth && fin.adult){ const line='Youth '+fin.youth.total+' \u2013 Adults '+fin.adult.total;
+      let team='';
+      const _solo = fin.youth && fin.adult && ((fin.youth.count && !fin.adult.count) || (fin.adult.count && !fin.youth.count));
+      if(!_solo && fin.teamWin && fin.youth && fin.adult){ const line='Youth '+fin.youth.total+' \u2013 Adults '+fin.adult.total;
         team = (fin.teamWin==='tie') ? ('It\u2019s a tie! '+line) : ((fin.teamWin===me.tag?'Your team wins! ':'')+line); }
       setArea('<div class="pa-title">That\u2019s a wrap!</div><div class="pa-good" style="font-size:22px">'+esc(team)+'</div><div class="pa-msg">Your team\u2019s champion: '+champ+'</div><div class="pa-hint">Thanks for playing, well done!</div>'); }
   } else if(phase==='closing'){
