@@ -868,7 +868,7 @@ start();
     const list=(theme&&theme!=='all')? shuf(THEMED.buzz.filter(x=>x.th===theme),r).concat(shuf(BUZZ_BANK.slice(),r)) : shuf(BUZZ_BANK.slice(),r);
     return pickDistinct(list, used, n, tf).map(o=>{ const opts=shuf([o.correct].concat(o.wrong),r); return {kind:'buzz', q:o.q, opts, correct:opts.indexOf(o.correct), tag:tf(o)}; }); }
 
-  const BUZZ_ARM=3000, BUZZ_WINDOW=700, BUZZ_ANSWER=10000, BUZZ_REVEAL=4600;
+  const BUZZ_ARM=3000, BUZZ_WINDOW=700, BUZZ_ANSWER=10000, BUZZ_REVEAL=4600, BUZZ_OPEN_MAX=20000;
   let bzActx=null;
   function stageAudio(){ if(!bzActx){ try{ bzActx=new (window.AudioContext||window.webkitAudioContext)(); }catch(e){} } return bzActx; }
   function playStageBuzz(){ SFX.buzz(); }
@@ -892,6 +892,8 @@ start();
     const tagCount={youth:0,adult:0}; players.forEach(p=>{ tagCount[p.tag]=(tagCount[p.tag]||0)+1; });
     let changed=false, hit=false, awarded=false, missed=false;
     ['youth','adult'].forEach(function(tag){ const lane=bz.lanes[tag]; if(lane.st==='done') return;
+      // A team nobody joined can never buzz, so it must not hold the round open.
+      if(!tagCount[tag]){ lane.st='done'; lane.win=null; lane.empty=true; changed=true; return; }
       const lb=buzzes.filter(function(b){ return b.tag===tag && !lane.out[b.player_id]; });
       if(lane.st==='open'){
         if(lb.length){ if(!lane.winStart) lane.winStart=Date.parse(lb[0].created_at);
@@ -912,10 +914,15 @@ start();
     if(window.HOST) window.HOST.set('celebrate'); writeBuzzRoom(); poll(); }
   function nextBuzzerQuestion(){ G.qi++; if(G.qi>=G.questions.length) endRound(); else startBuzzerQuestion(); }
   function buzzerTick(){ const bz=G.buzz; if(!bz) return; const now=Date.now();
-    if(bz.phase==='arm'){ renderBuzzTimer(now); if(now>=bz.armAt){ bz.phase='open'; playStageBuzz(); hostSay(pick(QUIPS.buzzopen),'huh'); writeBuzzRoom(); renderBuzzerStage(); } return; }
+    if(bz.phase==='arm'){ renderBuzzTimer(now); if(now>=bz.armAt){ bz.phase='open'; bz.openedAt=now; playStageBuzz(); hostSay(pick(QUIPS.buzzopen),'huh'); writeBuzzRoom(); renderBuzzerStage(); } return; }
     if(bz.phase==='reveal'){ if(now>=bz.revealUntil) nextBuzzerQuestion(); return; }
     renderBuzzTimer(now);
     if(now-bz.lastPoll>=500){ bz.lastPoll=now; resolveLanes(now); }
+    // nobody buzzing must not hold the show up forever
+    if(bz.openedAt && now-bz.openedAt>BUZZ_OPEN_MAX){
+      ['youth','adult'].forEach(function(t){ const l=bz.lanes[t]; if(l.st==='open'){ l.st='done'; l.win=null; } });
+      writeBuzzRoom(); renderBuzzerStage();
+    }
     if(bz.lanes.youth.st==='done' && bz.lanes.adult.st==='done') buzzerReveal();
   }
   function renderBuzzerStage(){ const bz=G.buzz; if(!bz) return;
@@ -933,7 +940,7 @@ start();
     if(bz.phase==='arm'){ status='Get ready\u2026'; }
     else if(lane.st==='open'){ status='BUZZ NOW!'; cls='live'; }
     else if(lane.st==='answering'){ status='Answering\u2026'; name=lane.bname||''; cls='ans'; }
-    else if(lane.st==='done'){ if(lane.win){ status='\u2713 got it!'; name=lane.win; cls='won'; } else { status='No answer'; cls='none'; } }
+    else if(lane.st==='done'){ if(lane.win){ status='\u2713 got it!'; name=lane.win; cls='won'; } else if(lane.empty){ status='No players'; cls='none'; } else { status='No answer'; cls='none'; } }
     el.className='bzlane '+(id==='bzYouth'?'youth':'adult')+(cls?(' '+cls):'');
     const s=el.querySelector('.bzstat'), n=el.querySelector('.bzname'); if(s) s.textContent=status; if(n) n.textContent=name;
   }
