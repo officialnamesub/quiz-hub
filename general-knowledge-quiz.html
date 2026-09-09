@@ -156,7 +156,7 @@
   .bmode{color:var(--gold);font-weight:700;font-size:13px;letter-spacing:1px;margin:-4px 0 2px;}
   .bload{color:var(--mut);font-weight:600;text-align:center;padding:14px;list-style:none;}
 </style>
-  <script src="questions.js?v=1"></script>
+  <script src="questions.js?v=7"></script>
 </head>
 <body>
 <div id="app">
@@ -259,6 +259,11 @@
   // ============ QUESTION BANK (stable, settled facts) ============
   const BANK_LOCAL={
     1:[
+      {"q":"What is the capital of Spain?","correct":"Madrid","wrong":["Barcelona","Seville","Valencia"]},
+      {"q":"How many keys does a standard piano have?","correct":"88","wrong":["66","76","98"]},
+      {"q":"Which big cat is known as the King of the Jungle?","correct":"Lion","wrong":["Tiger","Leopard","Cheetah"]},
+      {"q":"What is the largest country in the world by area?","correct":"Russia","wrong":["Canada","China","United States"]},
+      {"q":"What is the tallest animal in the world?","correct":"Giraffe","wrong":["Elephant","Camel","Horse"]},
       {"q":"What is the capital of France?","correct":"Paris","wrong":["London","Rome","Berlin"]},
       {"q":"How many continents are there on Earth?","correct":"Seven","wrong":["Five","Six","Eight"]},
       {"q":"What is the largest ocean on Earth?","correct":"Pacific","wrong":["Atlantic","Indian","Arctic"]},
@@ -301,6 +306,11 @@
       {"q":"What is the largest hot desert in the world?","correct":"The Sahara","wrong":["The Gobi","The Kalahari","The Arabian"]}
     ],
     2:[
+      {"q":"Which sea separates Europe from Africa?","correct":"Mediterranean","wrong":["Caribbean","Baltic","Red"]},
+      {"q":"Which is the longest river in Africa?","correct":"Nile","wrong":["Congo","Niger","Zambezi"]},
+      {"q":"What is the currency of India?","correct":"Rupee","wrong":["Taka","Rupiah","Baht"]},
+      {"q":"On which continent is the Sahara Desert?","correct":"Africa","wrong":["Asia","Australia","South America"]},
+      {"q":"What is the hardest natural substance on Earth?","correct":"Diamond","wrong":["Gold","Iron","Quartz"]},
       {"q":"What is the capital of Australia?","correct":"Canberra","wrong":["Sydney","Melbourne","Perth"]},
       {"q":"Who painted the Mona Lisa?","correct":"Leonardo da Vinci","wrong":["Michelangelo","Raphael","Donatello"]},
       {"q":"What is the chemical symbol for gold?","correct":"Au","wrong":["Ag","Gd","Go"]},
@@ -343,6 +353,11 @@
       {"q":"What is the chemical symbol for carbon?","correct":"C","wrong":["Ca","Co","Cb"]}
     ],
     3:[
+      {"q":"Which mountain range separates Europe from Asia?","correct":"Ural","wrong":["Alps","Andes","Himalayas"]},
+      {"q":"Which salty lake lies between Israel and Jordan?","correct":"Dead Sea","wrong":["Red Sea","Caspian Sea","Black Sea"]},
+      {"q":"What is the smallest country in the world by area?","correct":"Vatican City","wrong":["Monaco","San Marino","Liechtenstein"]},
+      {"q":"In which country is the ancient city of Petra located?","correct":"Jordan","wrong":["Egypt","Greece","Iraq"]},
+      {"q":"What is the official language of Brazil?","correct":"Portuguese","wrong":["Spanish","French","Italian"]},
       {"q":"What is the chemical symbol for potassium?","correct":"K","wrong":["P","Po","Pt"]},
       {"q":"In which year did the Berlin Wall fall?","correct":"1989","wrong":["1991","1987","1985"]},
       {"q":"Who wrote 'War and Peace'?","correct":"Leo Tolstoy","wrong":["Fyodor Dostoevsky","Anton Chekhov","Ivan Turgenev"]},
@@ -385,6 +400,11 @@
       {"q":"Who developed the first inactivated polio vaccine?","correct":"Jonas Salk","wrong":["Albert Sabin","Alexander Fleming","Louis Pasteur"]}
     ],
     4:[
+      {"q":"What is the capital of Kazakhstan?","correct":"Astana","wrong":["Almaty","Tashkent","Bishkek"]},
+      {"q":"Which is the largest desert in the world?","correct":"Antarctic","wrong":["Sahara","Gobi","Arabian"]},
+      {"q":"What is the currency of Poland?","correct":"Zloty","wrong":["Koruna","Forint","Leu"]},
+      {"q":"Which country is said to have the most natural lakes?","correct":"Canada","wrong":["Russia","United States","Finland"]},
+      {"q":"The Strait of Gibraltar separates Spain from which country?","correct":"Morocco","wrong":["Algeria","Tunisia","Portugal"]},
       {"q":"What is the SI unit of electrical resistance?","correct":"The ohm","wrong":["The volt","The ampere","The watt"]},
       {"q":"Which metal has the highest melting point?","correct":"Tungsten","wrong":["Iron","Platinum","Titanium"]},
       {"q":"In which year did the Western Roman Empire fall?","correct":"476 AD","wrong":["410 AD","312 AD","527 AD"]},
@@ -720,7 +740,5 @@
 
 })();
 </script>
-<div id="tb-bankinfo" style="position:fixed;left:8px;bottom:6px;font:700 11px system-ui,sans-serif;color:#fff;background:rgba(0,0,0,.5);padding:3px 7px;border-radius:6px;z-index:80;pointer-events:none;"></div>
-<script>(function(){var el=document.getElementById("tb-bankinfo");if(!el)return;if(window.TB&&window.TB.count){el.textContent="shared bank v"+(window.TB.v||"?")+" \u00b7 "+window.TB.count("gk")+" GK questions";}else{el.textContent="built-in questions (shared bank not loaded)";}})();</script>
 </body>
 </html>

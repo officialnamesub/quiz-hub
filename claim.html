@@ -100,7 +100,7 @@
   button.save{font-family:'Rye',serif;font-size:14px;color:#2a1808;border:none;cursor:pointer;background:linear-gradient(180deg,#d8aa4e,#a8772e);border-radius:12px;padding:0 18px;}
   .savesum{color:var(--mut);font-weight:800;font-size:13px;text-align:center;}
 </style>
-  <script src="questions.js?v=1"></script>
+  <script src="questions.js?v=7"></script>
 </head>
 <body>
 <div id="app">
@@ -294,7 +294,5 @@
     return 'unknown'; };
 })();
 </script>
-<div id="tb-bankinfo" style="position:fixed;left:8px;bottom:6px;font:700 11px system-ui,sans-serif;color:#fff;background:rgba(0,0,0,.5);padding:3px 7px;border-radius:6px;z-index:80;pointer-events:none;"></div>
-<script>(function(){var el=document.getElementById("tb-bankinfo");if(!el)return;if(window.TB&&window.TB.count){el.textContent="shared bank v"+(window.TB.v||"?")+" \u00b7 "+window.TB.count("gk")+" GK questions";}else{el.textContent="built-in questions (shared bank not loaded)";}})();</script>
 </body>
 </html>
